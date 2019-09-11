@@ -28,6 +28,30 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `)
+
+  const blogPage = await graphql(`
+    {
+      allPrismicBlogContents {
+        edges {
+          node {
+            id
+            uid
+          }
+        }
+      }
+    }
+  `)
+  
+  blogPage.data.allPrismicBlogContents.edges.forEach(( edge ) => {
+    createPage({
+      path: `/${edge.node.uid}`,
+      component: path.resolve(`src/templates/post.js`),
+      context: {
+        uid: edge.node.uid 
+      }
+    })
+  })
+
 	result.data.allMarkdownRemark.edges.forEach(({ node }) => {
     createPage({
       path: node.fields.slug,
@@ -40,3 +64,4 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 }
+

@@ -8,12 +8,12 @@ module.exports = {
 	},
 	plugins: [
    {
-      resolve: `source-prismic`,
+      resolve: `gatsby-source-prismic`,
       options: {
         repositoryName: `reyapr`,
         accessToken: `${process.env.API_KEY}`,
         linkResolver: ({ node, key, value }) => post => `/${post.uid}`,
-    }
+      }
    },
 	 {
 		 resolve: `gatsby-source-filesystem`,
